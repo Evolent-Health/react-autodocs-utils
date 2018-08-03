@@ -14,7 +14,8 @@ const parseJavascript = source => {
   let parsed;
 
   try {
-    parsed = javascriptParser.parse(source, componentResolve);
+    //parsed = javascriptParser.parse(source, componentResolve);
+    parsed = javascriptParser.parse(source);
   } catch (e) {
     parsed = {};
   }
