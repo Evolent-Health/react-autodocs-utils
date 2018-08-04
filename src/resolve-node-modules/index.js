@@ -5,7 +5,7 @@ const path = require('path');
 
 const resolveNodeModulesPath = (cwd, modulePath) => {
   const checkPath = './';
-  modulePath = modulePath.replace('semantic-ui-react/dist/es','semantic-ui-react/src');
+  modulePath = modulePath.replace('semantic-ui-react/es','semantic-ui-react/src');
 
   return readFolder(checkPath)
     .then(
