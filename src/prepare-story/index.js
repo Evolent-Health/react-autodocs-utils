@@ -28,7 +28,7 @@ const prepareStory = storyConfig => source =>
 
       ast.program.body.unshift(buildImportDeclaration(
         types.importDefaultSpecifier(types.identifier('story')),
-        'wix-storybook-utils/Story'
+        'storybook-utils/Story'
       ));
 
       return ast;

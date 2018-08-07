@@ -2,10 +2,10 @@
 
 const readFolder = require('../read-folder');
 const path = require('path');
-const readJson = require('read-package-json');
 
 const resolveNodeModulesPath = (cwd, modulePath) => {
-  const checkPath = path.dirname(cwd);
+  const checkPath = './';
+  modulePath = modulePath.replace('semantic-ui-react/es','semantic-ui-react/src');
 
   return readFolder(checkPath)
     .then(
@@ -18,24 +18,6 @@ const resolveNodeModulesPath = (cwd, modulePath) => {
                 'ERROR: Unable to resolve node_modules path in "${modulePath}"'
               )
     )
-    .then(modulePath => {
-      return new Promise((resolve, reject) => {
-       readJson(
-          path.join(modulePath, 'package.json'),
-          console.error,
-          false,
-          (err, data) => {
-            if (err) {
-              resolve(modulePath);
-            } else if (data.main) {
-              resolve(path.join(modulePath, data.main));
-            } else {
-              resolve(modulePath);
-            }
-          }
-        );
-      });
-    });
 };
 
 module.exports = resolveNodeModulesPath;
