@@ -19,13 +19,13 @@ const parseDocgen = (source, path) =>
 
 
 const mergeComponentProps = components =>
-  components.reduce(
-    (acc, component) => ({
-      ...acc,
-      ...component.props
-    }),
-    {}
-  );
+components.reduce(
+  (acc, component) => ({
+    ...acc,
+    ...component.props
+  }),
+  {}
+);
 
 
 const followComposedProps = (parsed, currentPath) =>
@@ -86,7 +86,7 @@ const followComposedProps = (parsed, currentPath) =>
     .then(composedProps => {
       const allProps = ({
         ...parsed,
-        props: { ...parsed.props, ...composedProps }
+        props: { ...composedProps, ...parsed.props }
       });
 
       // eslint-disable-next-line no-unused-vars
