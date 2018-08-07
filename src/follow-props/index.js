@@ -21,8 +21,8 @@ const parseDocgen = (source, path) =>
 const mergeComponentProps = components =>
 components.reduce(
   (acc, component) => ({
-    ...acc,
-    ...component.props
+    ...component.props,
+    ...acc
   }),
   {}
 );
