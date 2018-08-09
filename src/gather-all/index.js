@@ -52,13 +52,8 @@ const gatherAll = path =>
           .then(file => readFile(pathJoin(dirname(path), file)))
           .then(({source}) => source)
           .catch(() => Promise.resolve(''));
-
-        
-      console.log(metadata.displayName);
-      console.log(readMarkdown('./docs/readme.md'));
-      console.log(readMarkdown('./docs/' + metadata.displayName + '.md'));
       
-      const readme = readMarkdown('./docs/' + metadata.displayName + '.md');
+      const readme = readMarkdown('docs/' + metadata.displayName + '.md');
       const readmeAccessibility = readMarkdown('readme.accessibility.md');
       const readmeTestkit = readMarkdown('readme.testkit.md');
 
