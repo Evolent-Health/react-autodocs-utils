@@ -53,8 +53,11 @@ const gatherAll = path =>
           .then(({source}) => source)
           .catch(() => Promise.resolve(''));
 
+        
+      console.log("metadata");
+      console.log(metadata);
 
-      const readme = readMarkdown('readme.md');
+      const readme = readMarkdown('./docs/' + metadata.displayName + '.md');
       const readmeAccessibility = readMarkdown('readme.accessibility.md');
       const readmeTestkit = readMarkdown('readme.testkit.md');
 
