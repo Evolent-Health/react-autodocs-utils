@@ -42,42 +42,26 @@ const gatherAll = path =>
     .then(metadata =>
       Promise.all([
         Promise.resolve(metadata),
-        readFolder(path)
+        readFolder(path),
+		    readFolder(path.split("\\lib\\")[0] + "\\lib\\stories\\docs")
       ])
     )
 
-    .then(([metadata, files]) => {
+    .then(([metadata, files, docs]) => {
       const readMarkdown = markdownPath =>
-        containsFile(files)(markdownPath)
-          .then(file => readFile(pathJoin(dirname(path), file)))
+        containsFile(files.concat(docs))(markdownPath)
+          .then(file => readFile(path.split("\\lib\\")[0] + "\\lib\\stories\\docs\\" + markdownPath))
           .then(({source}) => source)
           .catch(() => Promise.resolve(''));
-
-      console.log(metadata.displayName);
-      console.log("\n\nPath:\n");
-      console.log(path);
-      console.log("\n\nFile:\n");
-      console.log(file);
-      console.log("\n\nMarkdown Input:\n");
-      console.log('docs/' + metadata.displayName + '.md');
-
       
-      const readme = readMarkdown('docs/' + metadata.displayName + '.md');
-      const readmeAccessibility = readMarkdown('readme.accessibility.md');
-      const readmeTestkit = readMarkdown('readme.testkit.md');
-
-      Promise.all([readme]).then(([readme]) => console.log("\n\nReadme:\n" + readme));
+      const readme = readMarkdown(metadata.displayName + '.md');
 
       return Promise.all([
         metadata,
-        readme,
-        readmeAccessibility,
-        readmeTestkit
-      ]).then(([metadata, readme, readmeAccessibility, readmeTestkit]) => ({
+        readme
+      ]).then(([metadata, readme]) => ({
         ...metadata,
-        readme,
-        readmeAccessibility,
-        readmeTestkit
+        readme
       }));
     });
 
