@@ -52,10 +52,21 @@ const gatherAll = path =>
           .then(file => readFile(pathJoin(dirname(path), file)))
           .then(({source}) => source)
           .catch(() => Promise.resolve(''));
+
+      console.log(metadata.displayName);
+      console.log("\n\nPath:\n");
+      console.log(path);
+      console.log("\n\nFile:\n");
+      console.log(file);
+      console.log("\n\nMarkdown Input:\n");
+      console.log('docs/' + metadata.displayName + '.md');
+
       
       const readme = readMarkdown('docs/' + metadata.displayName + '.md');
       const readmeAccessibility = readMarkdown('readme.accessibility.md');
       const readmeTestkit = readMarkdown('readme.testkit.md');
+
+      Promise.all([readme]).then(([readme]) => console.log("\n\nReadme:\n" + readme));
 
       return Promise.all([
         metadata,
