@@ -43,14 +43,14 @@ const gatherAll = path =>
       Promise.all([
         Promise.resolve(metadata),
         readFolder(path),
-		    readFolder(path.split("\\lib\\")[0] + "\\lib\\stories\\docs")
+		    readFolder(process.cwd() + "\\lib\\stories\\docs")
       ])
     )
 
     .then(([metadata, files, docs]) => {
       const readMarkdown = markdownPath =>
         containsFile(files.concat(docs))(markdownPath)
-          .then(file => readFile(path.split("\\lib\\")[0] + "\\lib\\stories\\docs\\" + markdownPath))
+          .then(file => readFile(process.cwd() + "\\lib\\stories\\docs\\" + markdownPath))
           .then(({source}) => source)
           .catch(() => Promise.resolve(''));
       
