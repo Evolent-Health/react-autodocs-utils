@@ -41,29 +41,10 @@ const gatherAll = path =>
 
     .then(metadata =>
       Promise.all([
-        Promise.resolve(metadata),
-        readFolder(path),
-		    readFolder(process.cwd() + "\\lib\\stories\\docs")
+        Promise.resolve(metadata)
       ])
-    )
-
-    .then(([metadata, files, docs]) => {
-      const readMarkdown = markdownPath =>
-        containsFile(files.concat(docs))(markdownPath)
-          .then(file => readFile(process.cwd() + "\\lib\\stories\\docs\\" + markdownPath))
-          .then(({source}) => source)
-          .catch(() => Promise.resolve(''));
-      
-      const readme = readMarkdown(metadata.displayName + '.md');
-
-      return Promise.all([
-        metadata,
-        readme
-      ]).then(([metadata, readme]) => ({
-        ...metadata,
-        readme
-      }));
-    });
-
+    ).then((metadata) => ({
+      ...metadata
+    }));
 
 module.exports = gatherAll;
