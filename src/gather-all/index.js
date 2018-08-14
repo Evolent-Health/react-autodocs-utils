@@ -42,32 +42,26 @@ const gatherAll = path =>
     .then(metadata =>
       Promise.all([
         Promise.resolve(metadata),
-        readFolder(path)
+        readFolder(path),
+		    readFolder(process.cwd() + "\\lib\\stories\\docs")
       ])
     )
 
-    .then(([metadata, files]) => {
+    .then(([metadata, files, docs]) => {
       const readMarkdown = markdownPath =>
-        containsFile(files)(markdownPath)
-          .then(file => readFile(pathJoin(dirname(path), file)))
+        containsFile(files.concat(docs))(markdownPath)
+          .then(file => readFile(process.cwd() + "\\lib\\stories\\docs\\" + markdownPath))
           .then(({source}) => source)
           .catch(() => Promise.resolve(''));
-
-
-      const readme = readMarkdown('readme.md');
-      const readmeAccessibility = readMarkdown('readme.accessibility.md');
-      const readmeTestkit = readMarkdown('readme.testkit.md');
+      
+      const readme = readMarkdown(metadata.displayName + '.md');
 
       return Promise.all([
         metadata,
-        readme,
-        readmeAccessibility,
-        readmeTestkit
-      ]).then(([metadata, readme, readmeAccessibility, readmeTestkit]) => ({
+        readme
+      ]).then(([metadata, readme]) => ({
         ...metadata,
-        readme,
-        readmeAccessibility,
-        readmeTestkit
+        readme
       }));
     });
 
