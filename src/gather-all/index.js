@@ -43,8 +43,15 @@ const gatherAll = path =>
       Promise.all([
         Promise.resolve(metadata)
       ])
-    ).then((metadata) => ({
-      ...metadata
-    }));
+    )
+
+    .then(([metadata]) => {
+      return Promise.all([
+        metadata
+      ]).then(([metadata]) => ({
+        ...metadata
+      }));
+    });
+
 
 module.exports = gatherAll;
